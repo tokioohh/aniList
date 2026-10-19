@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/*
+  Sistema de diseño de AniList.
+
+  Reglas: un solo acento (--accent) para todo lo interactivo, el dorado
+  (--rating) reservado a la estrella y la nota, sin degradados y sin sombras.
+  La jerarquía se construye con espacio, tamaño de texto y peso, no con cajas.
+  Todos los pares texto/fondo del tema oscuro superan el contraste AA.
+*/
+
+:root {
+  --bg: #12151c;
+  --surface: #1a1e27;
+  --line: #262b36;
+  --text: #eceef3;
+  --muted: #8a91a3;
+  --accent: #8fa3ff;
+  --rating: #f2c46d;
+  /* Rojo semántico: solo mensajes de error y acción destructiva. */
+  --danger: #ff8f8f;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-rating: var(--rating);
+  --color-danger: var(--danger);
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@theme {
+  /* Escala tipográfica fija: 12 / 14 / 16 / 20 / 28 / 44 px.
+     Se redefinen los tamaños que no coinciden con la de Tailwind (2xl y 4xl)
+     para que el título grande sea 28 y el del hero 44. */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.3;
+  --text-2xl: 1.75rem;
+  --text-2xl--line-height: 1.15;
+  --text-4xl: 2.75rem;
+  --text-4xl--line-height: 1.15;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* Foco visible siempre: la app se recorre completa con teclado. */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  /* Primario: relleno en acento con texto oscuro. 40px de alto, radio 8px. */
+  .btn-primary {
+    @apply inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-accent px-4 text-sm font-medium text-bg transition-colors hover:bg-accent/85 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Secundario: texto con borde de 1px. */
+  .btn-secondary {
+    @apply inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-line px-4 text-sm font-medium text-text transition-colors hover:bg-surface disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Acción discreta: solo texto. min-h-11 mantiene el área táctil de 44px. */
+  .btn-ghost {
+    @apply inline-flex min-h-11 items-center gap-1.5 text-sm text-muted transition-colors hover:text-text;
+  }
+
+  /* Destructivo: único uso de rojo. */
+  .btn-danger {
+    @apply inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-danger px-4 text-sm font-medium text-bg transition-colors hover:bg-danger/85 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  /* Campos: superficie sin borde; el foco es un anillo de 2px en acento. */
+  .field-input {
+    @apply w-full rounded-lg bg-surface px-3.5 text-text placeholder:text-muted transition-colors focus:outline-2 focus:outline-offset-2 focus:outline-accent;
+  }
+
+  /* Panel grande: superficie con radio 12px y sin borde. */
+  .surface {
+    @apply rounded-xl bg-surface;
+  }
+
+  /* Línea de metadatos: año, estado, resultados, nota. */
+  .meta {
+    @apply text-xs text-muted tabular-nums;
+  }
+
+  /* Pestaña o enlace de navegación: sin pastilla, el activo lleva un
+     subrayado fino de 2px en acento. */
+  .tab {
+    @apply relative inline-flex min-h-11 items-center text-sm font-medium text-muted transition-colors hover:text-text;
+  }
+
+  .tab-active {
+    @apply text-text after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:bg-accent;
+  }
+}
+
+@layer utilities {
+  /* Medida de lectura: unas 65 caracteres por línea. */
+  .measure {
+    max-width: 65ch;
+  }
+
+  /* Fila de filtros que hace scroll en móvil sin barra visible. */
+  .scroll-x {
+    scrollbar-width: none;
+  }
+  .scroll-x::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Respeta la preferencia de menos movimiento. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

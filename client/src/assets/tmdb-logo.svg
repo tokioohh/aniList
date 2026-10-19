@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="24" viewBox="0 0 120 24" role="img" aria-label="Marcador de posición">
+  <!-- MARCADOR: reemplazar por el logo oficial de TMDB descargado de
+       https://www.themoviedb.org/about/logos-attribution sin deformarlo ni recolorearlo. -->
+  <rect width="120" height="24" fill="none" />
+  <text x="60" y="16" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#9ca3af">
+    MARCADOR TMDB
+  </text>
+</svg>
