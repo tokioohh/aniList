@@ -1,0 +1,39 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "node --watch --env-file=../.env src/index.js",
+    "start": "node src/index.js",
+    "test": "vitest run",
+    "prisma:migrate:dev": "node --env-file=../.env node_modules/prisma/build/index.js migrate dev",
+    "prisma:migrate:deploy": "node --env-file=../.env node_modules/prisma/build/index.js migrate deploy",
+    "prisma:generate": "node --env-file=../.env node_modules/prisma/build/index.js generate",
+    "prisma:studio": "node --env-file=../.env node_modules/prisma/build/index.js studio"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "bcrypt": "^6",
+    "cookie-parser": "^1",
+    "cors": "^2",
+    "express": "^5",
+    "express-rate-limit": "^8",
+    "helmet": "^8",
+    "jsonwebtoken": "^9",
+    "lru-cache": "^11",
+    "morgan": "^1",
+    "prisma": "^6.19.3",
+    "zod": "^4"
+  },
+  "devDependencies": {
+    "supertest": "^7",
+    "vitest": "^3"
+  },
+  "overrides": {
+    "deepmerge-ts": "^8.0.0"
+  }
+}

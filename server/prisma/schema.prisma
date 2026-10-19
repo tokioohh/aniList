@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TitleSource {
+  TMDB_MOVIE
+  TMDB_TV
+  JIKAN_ANIME
+}
+
+enum TitleType {
+  MOVIE
+  SERIES
+  ANIME
+}
+
+enum WatchStatus {
+  PLAN_TO_WATCH
+  WATCHING
+  COMPLETED
+  DROPPED
+}
+
+enum Reaction {
+  LIKED
+  DISLIKED
+}
+
+model User {
+  id           String      @id @default(uuid()) @db.Uuid
+  email        String      @unique
+  username     String      @unique
+  passwordHash String
+  createdAt    DateTime    @default(now())
+  titles       UserTitle[]
+}
+
+// Snapshot mínimo del título. Los datos completos siempre se piden a la API externa.
+model Title {
+  id         String      @id @default(uuid()) @db.Uuid
+  source     TitleSource
+  externalId Int
+  type       TitleType
+  title      String
+  year       Int?
+  posterUrl  String?
+  fetchedAt  DateTime    @default(now())
+  userTitles UserTitle[]
+
+  @@unique([source, externalId])
+  @@index([fetchedAt])
+}
+
+// "Mi lista": la relación de un usuario con un título.
+model UserTitle {
+  id         String      @id @default(uuid()) @db.Uuid
+  userId     String      @db.Uuid
+  titleId    String      @db.Uuid
+  status     WatchStatus @default(PLAN_TO_WATCH)
+  reaction   Reaction?
+  isFavorite Boolean     @default(false)
+  rating     Int?
+  review     String?     @db.VarChar(2000)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title Title @relation(fields: [titleId], references: [id])
+
+  @@unique([userId, titleId])
+  @@index([userId, status])
+  @@index([userId, reaction])
+  @@index([userId, isFavorite])
+}
