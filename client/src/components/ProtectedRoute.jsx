@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useIsLoggedIn } from "../hooks/useMe.js";
+import { useAuth } from "../hooks/useAuth.js";
 import { Spinner } from "./States.jsx";
 
 /**
@@ -8,7 +8,7 @@ import { Spinner } from "./States.jsx";
  * Si no hay sesión, se redirige a /login guardando la ruta de origen.
  */
 export function ProtectedRoute() {
-  const { isLoggedIn, isLoading } = useIsLoggedIn();
+  const { isLoggedIn, isLoading } = useAuth();
   const location = useLocation();
 
   if (isLoading) return <Spinner label="Comprobando tu sesión" />;

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { useIsLoggedIn } from "../../hooks/useMe.js";
-import { useLogout } from "../../hooks/useAuthMutations.js";
+import { useAuth } from "../../hooks/useAuth.js";
 import tmdbLogo from "../../assets/tmdb-logo.svg";
 
 /**
@@ -46,8 +45,7 @@ export function Footer() {
 
 /** Cierre de sesión en la página de perfil. */
 export function LogoutButton({ className = "btn-secondary" }) {
-  const { isLoggedIn } = useIsLoggedIn();
-  const logout = useLogout();
+  const { isLoggedIn, logout } = useAuth();
 
   if (!isLoggedIn) return null;
 

@@ -2,12 +2,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { registerSchema, registerDefaults } from "../schemas/auth.schema.js";
-import { useRegister } from "../hooks/useAuthMutations.js";
+import { useAuth } from "../hooks/useAuth.js";
 import { FormField } from "../components/FormField.jsx";
 
 export function Register() {
   const navigate = useNavigate();
-  const register = useRegister();
+  const { register } = useAuth();
 
   const {
     register: bind,

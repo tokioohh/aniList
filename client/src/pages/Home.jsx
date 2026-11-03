@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { useIsLoggedIn } from "../hooks/useMe.js";
+import { useAuth } from "../hooks/useAuth.js";
 import { TrendingRow } from "../components/TrendingRow.jsx";
 
 export function Home() {
-  const { isLoggedIn } = useIsLoggedIn();
+  const { isLoggedIn } = useAuth();
 
   return (
     <>

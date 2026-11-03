@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { searchCatalog, fetchTrending, fetchTitleDetail } from "../api/catalog.api.js";
 import { useDebounced } from "./useDebounced.js";
-import { useIsLoggedIn } from "./useMe.js";
+import { useAuth } from "./useAuth.js";
 
 const MIN_CHARS = 2;
 
@@ -37,7 +37,7 @@ export function useSearch({ q, type = "ALL", page = 1 }) {
  * repite y además el detalle público nunca se mezcla con el de un usuario.
  */
 export function useTitleDetail(source, externalId) {
-  const { isLoggedIn } = useIsLoggedIn();
+  const { isLoggedIn } = useAuth();
 
   return useQuery({
     queryKey: ["catalog", "detail", source, externalId, isLoggedIn],

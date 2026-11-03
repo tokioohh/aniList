@@ -2,13 +2,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { loginSchema, loginDefaults } from "../schemas/auth.schema.js";
-import { useLogin } from "../hooks/useAuthMutations.js";
+import { useAuth } from "../hooks/useAuth.js";
 import { FormField } from "../components/FormField.jsx";
 
 export function Login() {
   const navigate = useNavigate();
   const location = useLocation();
-  const login = useLogin();
+  const { login } = useAuth();
 
   // Si ProtectedRoute mandó a /login, volvemos a donde el usuario quería ir.
   const from = location.state?.from ?? "/mi-lista";

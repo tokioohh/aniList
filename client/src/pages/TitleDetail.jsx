@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useTitleDetail } from "../hooks/useCatalog.js";
-import { useIsLoggedIn } from "../hooks/useMe.js";
+import { useAuth } from "../hooks/useAuth.js";
 import { useCreateEntry, useUpdateEntry, useDeleteEntry } from "../hooks/useListMutations.js";
 import { Spinner, ErrorState } from "../components/States.jsx";
 import { RatingInput } from "../components/RatingInput.jsx";
@@ -23,7 +23,7 @@ export function TitleDetail() {
   const { source, externalId } = useParams();
   const navigate = useNavigate();
 
-  const { isLoggedIn } = useIsLoggedIn();
+  const { isLoggedIn } = useAuth();
   const { data: title, isPending, isError, error, refetch } = useTitleDetail(source, externalId);
 
   const create = useCreateEntry(source, externalId);

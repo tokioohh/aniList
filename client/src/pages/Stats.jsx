@@ -1,4 +1,4 @@
-import { useIsLoggedIn } from "../hooks/useMe.js";
+import { useAuth } from "../hooks/useAuth.js";
 import { useStats } from "../hooks/useList.js";
 import { Spinner, ErrorState } from "../components/States.jsx";
 import { SectionHeader } from "../components/SectionHeader.jsx";
@@ -34,7 +34,7 @@ function formatAverage(value) {
 }
 
 export function Stats() {
-  const { user } = useIsLoggedIn();
+  const { user } = useAuth();
   const { data, isPending, isError, error, refetch } = useStats();
 
   if (isPending) return <Spinner label="Calculando tus estadísticas" />;

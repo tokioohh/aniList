@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Navbar, BottomNav } from "./Navbar.jsx";
 import { Footer } from "./Footer.jsx";
-import { useIsLoggedIn } from "../../hooks/useMe.js";
+import { useAuth } from "../../hooks/useAuth.js";
 
 export function Layout() {
-  const { isLoggedIn } = useIsLoggedIn();
+  const { isLoggedIn } = useAuth();
   const location = useLocation();
 
   // Cada navegación arranca arriba, como en una app nativa.
